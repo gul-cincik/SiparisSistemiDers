@@ -10,8 +10,8 @@ class UrunSiparis(models.Model):
 
     id = models.AutoField(primary_key=True)
     adet = models.IntegerField(null=False, default=0)
-    urun_id = models.ForeignKey(Urun, on_delete=models.DO_NOTHING)
-    siparis_id = models.ForeignKey(Siparis, on_delete=models.DO_NOTHING)
+    urun = models.ForeignKey(Urun, on_delete=models.DO_NOTHING)
+    siparis = models.ForeignKey(Siparis, on_delete=models.DO_NOTHING)
     fiyat = models.FloatField(null=False, default=0)
     created_at = models.DateTimeField(default=datetime.now, editable= False)
     is_deleted = models.BooleanField(default = False)

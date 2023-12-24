@@ -10,8 +10,8 @@ class Siparis(models.Model):
 
     id = models.AutoField(primary_key=True)
     aciklama = models.TextField()
-    adres_id = models.ForeignKey(Adres, on_delete=models.DO_NOTHING)
+    adres = models.ForeignKey(Adres, on_delete=models.DO_NOTHING)
     toplam_fiyat = models.FloatField(null=False, default= 0)
-    musteri_id = models.ForeignKey(Musteri, on_delete=models.DO_NOTHING)
+    musteri = models.ForeignKey(Musteri, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(default=datetime.now, editable= False)
     is_deleted = models.BooleanField(default = False)
