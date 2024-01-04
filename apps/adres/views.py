@@ -1,9 +1,13 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
+
+from apps.siparis.models import Siparis
 from .serializers import AdresSerializer
 from .models import Adres
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.decorators import action
+
 # Create your views here.
 
 class AdresViewSet(ModelViewSet):
@@ -43,3 +47,30 @@ class AdresViewSet(ModelViewSet):
             
         except Exception as e:
             return Response(e, status=status.HTTP_400_BAD_REQUEST)
+    
+    #Musteri ve siparis bazli adres getirme.
+    @action(detail=False, methods=['get'], url_path='siparisAdresi')
+    def siparis_adresi_getir(self, request):
+
+        try:
+            musteri_id = request.query_params.get('musteri_id')
+            siparis_id = request.query_params.get('siparis_id')
+
+            if not musteri_id or not siparis_id:
+                return Response("musteri_id ve siparis_id gerekli parametreler.", status=status.HTTP_400_BAD_REQUEST)
+
+            siparis = Siparis.objects.filter(musteri__id=musteri_id, id=siparis_id).first()
+
+            if not siparis:
+                return Response("Bu müşteriye veya siparişe ait sipariş bilgisi bulunamadı.", status=status.HTTP_404_NOT_FOUND)
+            
+            adres = Adres.objects.get(id=siparis.adres.id)
+
+            if not adres:
+                return Response("Bu müşteriye veya siparişe ait sipariş bilgisi bulunamadı.", status=status.HTTP_404_NOT_FOUND)
+            
+            serializer = AdresSerializer(adres, many=False)
+            return Response(serializer.data)
+
+        except Exception as e:
+            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)

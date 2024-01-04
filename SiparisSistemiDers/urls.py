@@ -22,4 +22,7 @@ urlpatterns = [
     path('musteri/', include('apps.musteri.urls')),
     path('adres/', include('apps.adres.urls')),
     path('urun/', include('apps.urun.urls')),
+    path('siparis/', include('apps.siparis.urls')),
+    path('urun_siparis/', include('apps.urun_siparis.urls'))
+
 ]

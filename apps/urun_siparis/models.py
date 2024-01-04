@@ -13,5 +13,6 @@ class UrunSiparis(models.Model):
     urun = models.ForeignKey(Urun, on_delete=models.DO_NOTHING)
     siparis = models.ForeignKey(Siparis, on_delete=models.DO_NOTHING)
     fiyat = models.FloatField(null=False, default=0)
+    siparis_durumu = models.IntegerField(null=False, default=0) #0=> sipariş oluşturuldu, 1=> sipariş yolda, 2=> sipariş teslim edildi.
     created_at = models.DateTimeField(default=datetime.now, editable= False)
     is_deleted = models.BooleanField(default = False)
