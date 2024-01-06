@@ -55,3 +55,25 @@ def urun_siparis_olustur(request):
     else:
         return Response({'error': 'Siparis creation failed', 'details': siparis_serializer.errors},
                         status=status.HTTP_400_BAD_REQUEST)
+
+#Müşteri bazlı sipariş getirme
+@api_view(['GET'])
+def musteri_siparis_getir(request,pk):
+
+    musteri = Musteri.objects.get(id=pk)
+
+    if musteri == None:
+
+        return Response({'error': 'Böyle bir müşteri bulunamadı.'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    siparisler = Siparis.objects.filter(musteri=musteri)
+
+    serialized_siparisler = SiparisSerializer(siparisler, many=True).data
+
+    response_data = {
+        'musteri_ad': musteri.ad ,
+        'musteri_soyad' : musteri.soyad,
+        'siparisler': serialized_siparisler
+    }
+
+    return Response(response_data, status=status.HTTP_200_OK)

@@ -6,3 +6,5 @@ class AdresSerializer(serializers.ModelSerializer):
     class Meta:
         model = Adres
         fields = '__all__'
+
+

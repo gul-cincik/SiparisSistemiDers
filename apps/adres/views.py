@@ -4,6 +4,9 @@ from .serializers import AdresSerializer
 from .models import Adres
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.decorators import action
+from apps.musteri.models import Musteri
+from apps.siparis.models import Siparis
 # Create your views here.
 
 class AdresViewSet(ModelViewSet):
@@ -43,3 +46,34 @@ class AdresViewSet(ModelViewSet):
             
         except Exception as e:
             return Response(e, status=status.HTTP_400_BAD_REQUEST)
+        
+    @action(detail=False, methods=['post'], url_path='siparis_adresi')
+    def siparis_adresi_getir(self, request):
+
+        #Bu Get methodu kullanıldığında kullanılan kod.
+        # musteri_id = request.query_params.get('musteri_id')
+        # siparis_id = request.query_params.get('siparis_id')
+
+        musteri_id = request.data['musteri_id']
+        siparis_id = request.data['siparis_id']
+        if not musteri_id or not siparis_id:
+
+            return Response('Müşteri ve Sipariş id leri zorunlu parametreler.', status=status.HTTP_400_BAD_REQUEST)
+        
+        musteri = Musteri.objects.get(id=musteri_id)
+
+        if musteri == None:
+            return Response('Böyle bir müşteri bulunamadı.', status=status.HTTP_400_BAD_REQUEST)
+        
+        siparis = Siparis.objects.get(id=siparis_id)
+
+        if siparis == None:
+            return Response('Böyle bir müşteri bulunamadı.', status=status.HTTP_400_BAD_REQUEST)
+        
+        adres = Adres.objects.get(id=siparis.adres.id)
+
+        if adres == None:
+            return Response('Bu siparişe ait adres bilgisi girilmemiş.', status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = AdresSerializer(adres)
+        return Response(serializer.data, status=status.HTTP_200_OK)
