@@ -9,7 +9,8 @@ from .models import Siparis
 from apps.urun.models import Urun
 from apps.musteri.models import Musteri
 
-from .serializers import SiparisSerializer, UrunSiparisSerializer
+from .serializers import SiparisSerializer
+from apps.urun_siparis.serializers import UrunSiparisSerializer
 
 @api_view(['POST'])
 def urun_siparis_olustur(request):
@@ -37,7 +38,7 @@ def urun_siparis_olustur(request):
                 'adet': urun_data['adet'],
                 'urun': urun.id,
                 'siparis': siparis.id,
-                'fiyat': urun.fiyat * int(urun_detay['adet']),
+                'fiyat': urun.fiyat * int(urun_data['adet']),
             }
 
             urun_siparis_serializer = UrunSiparisSerializer(data=urun_siparis_data)
