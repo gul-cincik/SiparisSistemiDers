@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-n)2un(%60&gtqkh170q)=tq#ugywc1i4cw(cpba(_cbdsum96_
 DEBUG = True
 
 ALLOWED_HOSTS = []
-AUTH_USER_MODEL = 'user.CustomUser'
+# AUTH_USER_MODEL = 'user.CustomUser'
 
 # Application definition
 
@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'apps.siparis',
     'apps.urun',
     'apps.urun_siparis',
-    'apps.user',
+    # 'apps.user',
 ]
 
 MIDDLEWARE = [
