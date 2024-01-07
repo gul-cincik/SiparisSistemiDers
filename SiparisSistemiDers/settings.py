@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-n)2un(%60&gtqkh170q)=tq#ugywc1i4cw(cpba(_cbdsum96_
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+AUTH_USER_MODEL = 'user.CustomUser'
 
 # Application definition
 
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'apps.siparis',
     'apps.urun',
     'apps.urun_siparis',
+    'apps.user',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
